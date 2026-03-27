@@ -1,16 +1,18 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
     private Scene previousScene;
+    public Scene loadedScene;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        Global.sceneHandler = this;
     }
 
     // Update is called once per frame
@@ -24,31 +26,21 @@ public class SceneHandler : MonoBehaviour
     // If false, the scene is merely hidden. Useful for menus where you might need to return to the previous scene.
     public void LoadScene(String path, bool free)
     {
-        StartCoroutine(LoadSceneRoutine(path, free));
-    }
-
-    private IEnumerator LoadSceneRoutine(string path, bool free)
-    {
-        if (previousScene.IsValid())
+        previousScene = SceneManager.GetActiveScene();
+        if (free)
         {
-            yield return SceneManager.UnloadSceneAsync(previousScene);
+            SceneManager.UnloadSceneAsync(previousScene);
         }
         else
         {
-            // Deactivate all root objects to hide the scene
-            foreach (GameObject obj in previousScene.GetRootGameObjects())
-            {
-                obj.SetActive(false);
-            }
+            SceneVisibilityManager.instance.Hide(previousScene);
         }
 
-        // Load the new scene asynchronously
-        yield return SceneManager.LoadSceneAsync(path, LoadSceneMode.Additive);
-        Scene loadedScene = SceneManager.GetSceneByName(path);
+        SceneManager.LoadSceneAsync(path, LoadSceneMode.Additive);
+        loadedScene = SceneManager.GetSceneByName(path);
 
-        // Set the new scene as active
         SceneManager.SetActiveScene(loadedScene);
-
         previousScene = loadedScene;
+
     }
 }

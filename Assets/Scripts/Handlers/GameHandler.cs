@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
+    // test
+    public bool free;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -9,6 +12,7 @@ public class GameHandler : MonoBehaviour
 
         // for Testing purposes
         // AudioHandler.PlayMusic("Audio/gameplay.ogg", 20f);
+        Global.sceneHandler.LoadScene("TestScene1", true);
         
     }
 
