@@ -1,1 +1,14 @@
+# Unity folders that don't need to be tracked
 Library/
+Logs/
+UserSettings/
+
+# MacOS specific ignores
+*.DS_Store
+Assets/*.DS_Store
+Assets/Audio/*.DS_Store
+Assets/Prefabs/*.DS_Store
+Assets/Scenes/*.DS_Store
+Assets/Scripts/*.DS_Store
+Assets/Settings/*.DS_Store
+ProjectSettings/*.DS_Store
