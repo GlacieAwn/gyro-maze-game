@@ -9,6 +9,7 @@ public class GameHandler : MonoBehaviour
 
         // for Testing purposes
         // AudioHandler.PlayMusic("Audio/gameplay.ogg", 20f);
+        
     }
 
     // Update is called once per frame
