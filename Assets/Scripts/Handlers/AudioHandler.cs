@@ -1,5 +1,3 @@
-using System;
-using Mono.Cecil;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -24,7 +22,7 @@ public class AudioHandler : MonoBehaviour
         musicSource = gameObject.AddComponent<AudioSource>();
         musicSource.clip = musicClip;
         
-        
+        musicSource.loop = false; // this needs to be here to override the default, otherwise unity will loop from the start regardless
     }
     private void Start()
     {
@@ -33,6 +31,7 @@ public class AudioHandler : MonoBehaviour
         // subtract the amount of samples in the clip by the frequency divided by framerate. This calculates how many samples were passed in a given frame, to avoid the loop check to pass the clip length before the next frame.
         clipLength = musicSource.clip.samples - Mathf.CeilToInt(musicSource.clip.frequency / Application.targetFrameRate);
 
+        musicSource.Play();
     }
 
     private void Update()
@@ -46,7 +45,7 @@ public class AudioHandler : MonoBehaviour
         }
         else if (musicClip == null)
         {
-            Debug.LogError("Error! Clip not assigned to AudioSource Component. Audio will not play.");
+            Debug.LogError("Error! Clip not assigned to AudioSource Component.");
         }
         else if (musicSource.timeSamples >= clipLength) 
         { 
@@ -54,17 +53,13 @@ public class AudioHandler : MonoBehaviour
         }
     }
 
-    private void PlayMusic(String path, float loopPoint)
-    {
-        musicSource.loop = false; // this needs to be here to override the default, otherwise unity will loop from the start regardless
+    // public static void PlayMusic(String path, float loopPoint)
+    // {
+    //     musicSource.loop = false; // this needs to be here to override the default, otherwise unity will loop from the start regardless
 
-        musicClip = Resources.Load<AudioClip>(path);
-        loopStart = loopPoint;
-        musicSource.Play();
-    }
+    //     musicClip = Resources.Load<AudioClip>(path);
+    //     loopStart = loopPoint;
+    //     musicSource.Play();
+    // }
 
-    private void PlaySFX(string path)
-    {
-        // TODO: SFX Handling
-    }
 }

@@ -6,6 +6,9 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+
+        // for Testing purposes
+        // AudioHandler.PlayMusic("Audio/gameplay.ogg", 20f);
     }
 
     // Update is called once per frame
