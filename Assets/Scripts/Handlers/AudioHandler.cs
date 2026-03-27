@@ -38,10 +38,28 @@ public class AudioHandler : MonoBehaviour
     {
 
         currentPosition = musicSource.timeSamples; // for debug purposes
-        
-        if (musicSource.timeSamples >= clipLength) 
+        if (musicSource == null)
+        {
+            Debug.LogError("Error! musicSource not found");
+            return;
+        }
+        else if (musicClip == null)
+        {
+            Debug.LogError("Error! Clip not assigned to AudioSource Component.");
+        }
+        else if (musicSource.timeSamples >= clipLength) 
         { 
             musicSource.timeSamples = loopStartSamples;
         }
     }
+
+    // public static void PlayMusic(String path, float loopPoint)
+    // {
+    //     musicSource.loop = false; // this needs to be here to override the default, otherwise unity will loop from the start regardless
+
+    //     musicClip = Resources.Load<AudioClip>(path);
+    //     loopStart = loopPoint;
+    //     musicSource.Play();
+    // }
+
 }
